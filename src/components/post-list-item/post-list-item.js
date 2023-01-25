@@ -1,31 +1,46 @@
-import React from "react";
+import React, {Component} from "react";
 
 import './post-list-item.css';
 
-const PostListItem = ({label, important = false}) => {
+export default class PostListItem extends Component {
 
-    let classNames = 'app-list-item d-flex justify-content-between';
-    if (important) {
-        classNames += ' important';
-    }
+    render() {
+        const {label, onDelete, onToggleImportant, onToggleLiked, important, like} = this.props;
+        let classNames = 'app-list-item d-flex justify-content-between';
+        if (important) {
+            classNames += ' important';
+        }
 
-    return (
-        <div className={classNames}>
-            <span className="app-list-item-label">
-                {label}
-            </span>
-            <div className="d-flex justify-content-center align-items-center">
-                <button type="button" className="btn-star btn-sm">
-                    <i className="bi bi-star"></i>
-                </button>
-                <button type="button" className="btn-trash btn-sm">
-                    <i className="bi bi-trash"></i>
-                </button>
-                <i className="bi bi-heart"></i>
+        if (like) {
+            classNames += ' like';
+        }
+
+        return (
+            <div className={classNames}>
+                <span
+                    className="app-list-item-label"
+                    onClick={onToggleLiked}
+                >
+                    {label}
+                </span>
+                <div className="d-flex justify-content-center align-items-center">
+                    <button
+                        type="button"
+                        className="btn-star btn-sm"
+                        onClick={onToggleImportant}
+                    >
+                        <i className="bi bi-star"></i>
+                    </button>
+                    <button
+                        type="button"
+                        className="btn-trash btn-sm"
+                        onClick={onDelete}
+                    >
+                        <i className="bi bi-trash"></i>
+                    </button>
+                    <i className="bi bi-heart"></i>
+                </div>
             </div>
-        </div>
-    );
-};
-   
-
-export default PostListItem;
+        );
+    }
+}
